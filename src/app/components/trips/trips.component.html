@@ -1,0 +1,25 @@
+<div class="container">
+  <h1 class="text-center">
+    {{title}}
+  </h1>
+
+  <div class="row" style="margin-top: 25px;">
+    <div class="col-md-6" *ngFor="let item of trips">
+      <div class="card" >
+        <div class="card-body" *ngIf="!item.isEdit; else elseBlock">
+          <h5 class="card-title">Nazwa: {{item.name}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Opis: {{item.desc}} </h6>
+          <p class="card-text">Data: {{item.date}}</p>
+          <p class="card-text">Start: {{item.start_place}}</p>
+          <p class="card-text">Koniec: {{item.destination_place}}</p>
+          <p class="card-text">Ilość dni: {{item.days_count}}</p>
+          <p class="card-text">Ilość KM: {{item.km_arrived}}</p>
+          <img class="img-fluid" src="{{item.image_url}}">
+          <div class="embed-responsive embed-responsive-16by9 mt-5">
+            <video class="embed-responsive-item" controls><source src="{{item.video_url}}" type="video/mp4"></video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

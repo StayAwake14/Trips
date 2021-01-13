@@ -1,0 +1,150 @@
+
+<div class="container mt-5">
+    <h1 class="text-center">
+      {{title}}
+    </h1>
+    <button class="btn btn-info" (click)="showAddPanel();">Panel dodawania</button>
+    <button class="btn btn-info ml-3" (click)="showEditPanel();">Panel edycji</button>
+
+    <div class="row w-50 mx-auto" *ngIf="isAdd">
+      <h2 class="mx-auto pt-5 pb-4">Dodawanie wycieczki</h2>
+      <div class="col-md-12 form-group">
+        <input type="text" class="form-control" [(ngModel)]="name" placeholder="Nazwa">
+      </div>
+      <div class="col-md-12 form-group">
+        <input type="text" class="form-control" [(ngModel)]="desc" placeholder="Opis">
+      </div>
+      <div class="col-md-12 form-group">
+        <input type="date" class="form-control" [(ngModel)]="date" placeholder="Data">
+      </div>
+      <div class="col-md-12 form-group">
+        <input type="text" class="form-control" [(ngModel)]="start_place" placeholder="Miejsce startu">
+      </div>
+      <div class="col-md-12 form-group">
+        <input type="text" class="form-control" [(ngModel)]="destination_place" placeholder="Miejsce docelowe">
+      </div>
+      <div class="col-md-12 form-group">
+        <input type="number" class="form-control" [(ngModel)]="days_count" placeholder="days_count">
+      </div>
+      <div class="col-md-12 form-group">
+        <input type="number" class="form-control" [(ngModel)]="km_arrived" placeholder="Przebyte KM">
+      </div>
+      <div class="custom-file">
+        <input type="file" class="text-nowrap text-truncate custom-file-input" (change)="selectImage($event)" accept="image/x-png,image/gif,image/jpeg"/>
+        <label class="custom-file-label">{{ imageNameAdd }}</label>
+        <div *ngIf="currentImageUpload" class="progress mt-2">
+          <div class="progress-bar progress-bar-info" role="progressbar" attr.aria-valuenow="{{ percentage_image }}" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: percentage_image + '%' }">
+            {{ percentage }}%
+          </div>
+        </div>
+      </div>
+      <div class="custom-file mt-3">
+        <input type="file" class="text-nowrap text-truncate custom-file-input" (change)="selectVideo($event)"/>
+        <label class="custom-file-label">{{ videoNameAdd }}</label>
+        <div *ngIf="currentVideoUpload" class="progress mt-2">
+          <div class="progress-bar progress-bar-info" role="progressbar" attr.aria-valuenow="{{ percentage_video }}" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: percentage_video + '%' }">
+            {{ percentage }}%
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 form-group text-center">
+        <button type="button" (click)="CreateRecord()" [disabled]="!desc || !days_count || !name" class="btn btn-primary mt-3">Dodaj wycieczkę</button>
+      </div>
+
+    </div>
+    <div class="p-3 fixedAction">
+        <h3 class="text-center">Panel akcji</h3>
+        <div *ngIf="currentImageUpload" class="progress mt-2">
+          <div class="progress-bar progress-bar-info" role="progressbar" attr.aria-valuenow="{{ percentage_image }}" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: percentage_image + '%' }">
+            Postęp edycji obrazu: {{ percentage_image }}%
+          </div>
+        </div>
+        <div *ngIf="currentVideoUpload" class="progress mt-2">
+          <div class="progress-bar progress-bar-info" role="progressbar" attr.aria-valuenow="{{ percentage_video }}" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: percentage_video + '%' }">
+            Postęp edycji video: {{ percentage_video }}%
+          </div>
+        </div>
+    </div>
+   <div class="row" style="margin-top: 25px;" *ngIf="isEdit">
+      <div class="col-md-6" *ngFor="let item of trips">
+        <div class="card" >
+          <div class="card-body" *ngIf="!item.isEdit; else editBlock">
+            <h5 class="card-title">Nazwa: {{item.name}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Opis: {{item.desc}} </h6>
+            <p class="card-text">Data: {{item.date}}</p>
+            <p class="card-text">Start: {{item.start_place}}</p>
+            <p class="card-text">Koniec: {{item.destination_place}}</p>
+            <p class="card-text">Ilość dni: {{item.days_count}}</p>
+            <p class="card-text">Ilość KM: {{item.km_arrived}}</p>
+            <img class="img-fluid" src="{{item.image_url}}">
+
+            <div class="embed-responsive embed-responsive-16by9 mt-5">
+              <video class="embed-responsive-item" controls><source src="{{item.video_url}}" type="video/mp4"></video>
+            </div>
+
+            <button class="btn btn-primary mt-3" (click)="EditRecord(item)">Edytuj</button>
+            <button class="btn btn-danger mt-3 ml-3" (click)="RemoveRecord(item.id)">Usuń</button>
+          </div>
+          <ng-template #editBlock>
+            <div class="card-body">
+              <h5 class="card-title">Edit</h5>
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="text" class="form-control" [(ngModel)]="item.name" placeholder="Nazwa">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="text" class="form-control" [(ngModel)]="item.desc" placeholder="Opis">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="date" class="form-control" [(ngModel)]="item.date" placeholder="Data">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="text" class="form-control" [(ngModel)]="item.start_place" placeholder="Miejsce Startu">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="text" class="form-control" [(ngModel)]="item.destination_place" placeholder="Miejsce Końca">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="number" class="form-control" [(ngModel)]="item.days_count" placeholder="Ilość dni">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="number" class="form-control" [(ngModel)]="item.km_arrived" placeholder="Ilość KM">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="custom-file">
+                      <input type="file" id='image' name="imageName" class="custom-file-input"  (change)="selectImage($event, item)" accept="image/x-png,image/gif,image/jpeg">
+                      <label class="custom-file-label" for='image'> {{ item.imageName }}</label>
+                    </div>  
+                  </div>
+                  <div class="col-md-12">
+                    <div class="custom-file mt-3">
+                      <input type="file" id='video' name="videoName" class="custom-file-input" (change)="selectVideo($event, item)">
+                      <label class="custom-file-label" for='video'> {{ item.videoName }} </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <button class="btn btn-danger" (click)="item.isEdit = false">Anuluj</button>
+              <button class="btn btn-success ml-3" (click)="UpdateRecord(item);" >Aktualizuj</button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>

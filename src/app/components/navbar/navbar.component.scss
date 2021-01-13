@@ -1,0 +1,28 @@
+.navbar{
+    background: #D40B36 !important;
+    padding:0;
+    .nav-item{
+        
+        transition-duration: 300ms;
+
+        .nav-link{
+            color:white !important;
+            text-transform: uppercase;
+            font-weight:bold;
+            padding:20px;
+            margin:0;
+            background-position: 100% 0;
+            font-size:20px;
+            font-family: 'Caveat', cursive !important;
+            &:hover{
+                background:whitesmoke;
+                color:#D40B36 !important;
+                transition-duration: 300ms;
+                background-size: 200% 100%;
+                background-image: linear-gradient(to right, white 50%,#D40B36 50%, );
+                transition: background-position 300ms;
+            }
+        }
+
+    }
+}
