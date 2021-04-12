@@ -5,13 +5,13 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyD4U7rhoI1FauPriRUdA9UVS-Hf7vGzPHc",
-    authDomain: "wycieczki-2df5a.firebaseapp.com",
-    projectId: "wycieczki-2df5a",
-    storageBucket: "wycieczki-2df5a.appspot.com",
-    messagingSenderId: "86023839103",
-    appId: "1:86023839103:web:6fd66309ed8935455ece4a",
-    measurementId: "G-FH6MHCFPYC"
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "",
+    measurementId: ""
   }
 };
 
